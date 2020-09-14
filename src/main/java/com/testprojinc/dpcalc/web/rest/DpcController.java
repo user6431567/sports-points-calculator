@@ -8,12 +8,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class DpcController {
 
     private final DpcService dpcService;
+
+    @GetMapping(value = "/sport/list", produces = "application/json")
+    public List<String> getSportsList() {
+        return dpcService.getSportsList();
+    }
 
     @GetMapping(value = "/sport/{sport}/result/{result}", produces = "application/json")
     public CalculatedResultResponse calculatePoints(@PathVariable String sport, @PathVariable String result) {
