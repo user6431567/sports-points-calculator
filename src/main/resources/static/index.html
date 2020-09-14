@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculator</title>
+    <script src="angular.js"></script>
+    <script src="app.js"></script>
+    <style>
+      .container {
+        width: 250px;
+        margin: auto;
+        text-align: center;
+      }
+
+      .form {
+        width: 100%;
+      }
+
+      .form select, input {
+        margin-bottom: 10px;
+      }
+
+      .calculated {
+        margin: 10px;
+        text-align: left;
+      }
+
+      .calculated .points {
+        font-size: larger;
+        font-weight: bold;
+      }
+    </style>
+</head>
+<body ng-app="calcApp">
+<div class="container" ng-controller="calcCtrl" ng-init="load()">
+    <h3>Decathlon points calculator</h3>
+    <div class="form">
+        <label for="sport">Sport:</label>
+        <select ng-model="requestData.sport" style="margin-left: 6px; width: 178px" id="sport">
+            <option value="">Not selected</option>
+            <option ng-repeat="sport in sports" value="{{ sport }}">
+                {{ sport }}
+            </option>
+        </select>
+        <label for="result">Result:</label>
+        <input ng-model="requestData.result" style="width: 170px" type="text" id="result" />
+        <br/>
+        <button style="width: 100%" ng-click="calculate()" ng-disabled="!requestData.sport || !requestData.result">
+            Calculate
+        </button>
+    </div>
+    <div class="calculated" ng-show="calculated.points">
+        <div>Sport: {{ calculated.sport }}</div>
+        <div>Result: {{ calculated.result }}</div>
+        <div class="points">Points: {{ calculated.points }}</div>
+    </div>
+</div>
+</body>
+</html>

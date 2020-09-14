@@ -17,3 +17,7 @@ REST API to calculate decathlon points
 ### Example
 
     GET http://localhost:8080/api/v1/sport/100%20m/result/10.395
+    
+### UI URL
+
+    http://localhost:8080/

@@ -7,11 +7,25 @@ import com.testprojinc.dpcalc.utils.TimeUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class DpcService {
 
     private final EventRepository eventRepository;
+
+    /**
+     * Method to get list of sports available for points calculation
+     *
+     * @return list of all known decathlon sports
+     */
+    public List<String> getSportsList() {
+        return eventRepository.findAll().stream()
+                .map(Event::getName)
+                .collect(Collectors.toList());
+    }
 
     /**
      * Method to calculate decathlon points for given sport and result.
@@ -68,7 +82,7 @@ public class DpcService {
      * @param result Distance
      * @return Calculated decathlon points
      */
-    public int calculateFieldEventPoints(Event event, String result) {
+    private int calculateFieldEventPoints(Event event, String result) {
         final Double rb = (Double.parseDouble(result) * 100) - event.getB();
         return calculateCommonFormulaPart(event, rb);
     }
@@ -80,7 +94,7 @@ public class DpcService {
      * @param rb Calculated part with parameters 'result' and 'B'. Differs for field events and track events.
      * @return Calculated decathlon points
      */
-    public int calculateCommonFormulaPart(Event event, Double rb) {
+    private int calculateCommonFormulaPart(Event event, Double rb) {
         return (int) (event.getA() * Math.pow(rb, event.getC()));
     }
 
